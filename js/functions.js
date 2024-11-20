@@ -1,14 +1,16 @@
-function str_len(str, len) {
-  return str.length <= len ? true : false;
-};
+/* eslint-disable no-unused-vars */
 
-// console.log(str_len('строка строка строка строка', 20));
+function strLen(str, len) {
+  return str.length <= len;
+}
+
+// console.log(strLen('строка строка строка строка', 20));
 // console.log(str_len('строка', 3));
 // console.log(str_len('строка', 15));
 
 function isPalindrome(str) {
   str = str.toLowerCase().replaceAll(' ', '');
-  return str === str.split('').reverse().join('') ? true : false;
+  return str === str.split('').reverse().join('');
 }
 
 // console.log(isPalindrome('Лёша на полке клопа нашёл '));
@@ -17,15 +19,15 @@ function isPalindrome(str) {
 // console.log(isPalindrome('Кекс'));
 
 
-function to_Num (str) {
+function toNum (str) {
   str = str.toString();
-  let new_num = "";
+  let newNum = '';
   for (let i = 0; i < str.length; i++) {
-    if (!isNaN(parseInt(str[i])) && !(str[i] == "0" && new_num == "")) {
-      new_num += str[i];
+    if (!isNaN(parseInt(str[i], 10)) && !(str[i] === '0' && newNum === '')) {
+      newNum += str[i];
     }
   }
-  return new_num != "" ? new_num : NaN;
+  return newNum !== '' ? newNum : NaN;
 }
 
 // console.log(to_Num('2023 год'));
