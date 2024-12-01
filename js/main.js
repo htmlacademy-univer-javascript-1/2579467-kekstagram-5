@@ -1,7 +1,6 @@
 const idArray = [];
 const urlArray = [];
 const commentIdArray = [];
-const userPhotos = [];
 
 const NAMES = [
   "Александр", "Алексей", "Анатолий", "Андрей", "Анна", "Аркадий",
@@ -11,66 +10,48 @@ const NAMES = [
   "Лидия", "Максим", "Мария", "Наталья", "Николай", "Ольга"
 ];
 
+const COMMENTS = [
+  "Всё отлично!",
+  "В целом всё неплохо. Но не всё.",
+  "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
+  "Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.",
+  "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
+  "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!"
+];
+
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const minValue = Math.ceil(min);
+  const maxValue = Math.floor(max);
+  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
-function getUniqueId() {
-  let id = getRandomInt(1, 25);
-  while (idArray.includes(id)) {
-    id = getRandomInt(1, 25);
+function getUniqueValues(min, max, valuesArray) {
+  let value = getRandomInt(min, max);
+  while (valuesArray.includes(value)) {
+    value = getRandomInt(min, max);
   }
-  idArray.push(id);
-  return id;
-}
-
-function getUniqueUrl() {
-  let url = getRandomInt(1, 25);
-  while (urlArray.includes(url)) {
-    url = getRandomInt(1, 25);
-  }
-  urlArray.push(url);
-  return url;
-}
-
-function getUniqueCommentId() {
-  let id = getRandomInt(0, 750);
-  while (commentIdArray.includes(id)) {
-    id = getRandomInt(0, 750);
-  }
-  commentIdArray.push(id);
-  return id;
+  valuesArray.push(value);
+  return value;
 }
 
 function getCommentsArray() {
-  const commentArray = [];
   const commentsNum = getRandomInt(0, 30);
-  for (let i = 0; i < commentsNum; i++) {
-    const comment = {
-      id: getUniqueCommentId(),
-      avatar: `img/avatar-${ getRandomInt(1,6) }.svg`,
-      message: "Всё отлично!",
-      name: NAMES[getRandomInt(0, NAMES.length - 1)],
-    };
-    commentArray.push(comment);
-  }
-  return commentArray;
+  return Array.from({ length: commentsNum }, () => ({
+    id: getUniqueValues(0, 750, commentIdArray),
+    avatar: `img/avatar-${ getRandomInt(1,6) }.svg`,
+    message: COMMENTS[getRandomInt(0, COMMENTS.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)],
+  }));
 }
 
 function createPhotoDescription() {
-  for (let i = 0; i < 25; i++) {
-    const obj = {
-      id: getUniqueId(),
-      url: `photos/${ getUniqueUrl() }.jpg`,
-      description: "Счастье — это делать то, что ты любишь!",
-      likes: getRandomInt(15,200),
-      comment: getCommentsArray(),
-    };
-    userPhotos.push(obj);
-  }
-  return userPhotos;
+  return Array.from({ length: 25 }, () => ({
+    id: getUniqueValues(1, 25, idArray),
+    url: `photos/${getUniqueValues(1, 25, urlArray)}.jpg`,
+    description: "Счастье — это делать то, что ты любишь!",
+    likes: getRandomInt(15, 200),
+    comments: getCommentsArray(),
+  }));
 }
 
 console.log(createPhotoDescription());
