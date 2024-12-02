@@ -2,6 +2,7 @@ const idArray = [];
 const urlArray = [];
 const commentIdArray = [];
 
+
 const NAMES = [
   "Александр", "Алексей", "Анатолий", "Андрей", "Анна", "Аркадий",
   "Борис", "Валентин", "Валерия", "Василий", "Виктор", "Виктория",
@@ -19,6 +20,7 @@ const COMMENTS = [
   "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!"
 ];
 
+
 function getRandomInt(min, max) {
   const minValue = Math.ceil(min);
   const maxValue = Math.floor(max);
@@ -34,12 +36,26 @@ function getUniqueValues(min, max, valuesArray) {
   return value;
 }
 
+function getCommentText() {
+  const selectedText = [];
+  const count = getRandomInt(1, 2);
+  while (selectedText.length < count) {
+    const randomMessage = COMMENTS[getRandomInt(0, COMMENTS.length - 1)];
+    if (!selectedText.includes(randomMessage)) {
+      selectedText.push(randomMessage);
+    }
+  }
+
+  return selectedText.join(" ");
+}
+
+
 function getCommentsArray() {
   const commentsNum = getRandomInt(0, 30);
   return Array.from({ length: commentsNum }, () => ({
     id: getUniqueValues(0, 750, commentIdArray),
     avatar: `img/avatar-${ getRandomInt(1,6) }.svg`,
-    message: COMMENTS[getRandomInt(0, COMMENTS.length - 1)],
+    message: getCommentText(),
     name: NAMES[getRandomInt(0, NAMES.length - 1)],
   }));
 }
