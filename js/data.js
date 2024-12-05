@@ -1,8 +1,8 @@
 import {getUniqueValues, getRandomInt} from "./util.js";
 
-const idArray = [];
-const urlArray = [];
-const commentIdArray = [];
+let idArray = [];
+let urlArray = [];
+let commentIdArray = [];
 
 const NAMES = [
   "Александр", "Алексей", "Анатолий", "Андрей", "Анна", "Аркадий",
@@ -45,9 +45,12 @@ function getCommentsArray() {
 }
 
 function createPhotoDescription() {
+  commentIdArray = [];
+  idArray = [];
+  urlArray = [];
   return Array.from({ length: 25 }, () => ({
-    id: getUniqueValues(1, 25, idArray),
-    url: `photos/${getUniqueValues(1, 25, urlArray)}.jpg`,
+    id: getUniqueValues(1,25,idArray),
+    url: `photos/${getUniqueValues(1,25,urlArray)}.jpg`,
     description: "Счастье — это делать то, что ты любишь!",
     likes: getRandomInt(15, 200),
     comments: getCommentsArray(),
