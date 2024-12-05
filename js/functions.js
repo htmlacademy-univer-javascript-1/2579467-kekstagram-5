@@ -9,7 +9,6 @@ function isPalindrome(str) {
   return normalizedStr === normalizedStr.split("").reverse().join("");
 }
 
-
 function toNum(inputValue) {
   const str = inputValue.toString();
   let newNum = "";

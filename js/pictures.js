@@ -1,9 +1,12 @@
 import { createPhotoDescription } from "./data.js";
 
 const pictureTemplate = document.querySelector("#picture").content.querySelector(".picture");
-const picturesContainer = document.querySelector("section.pictures");
+const picturesContainer = document.querySelector(".pictures");
 
 const photoDescription = createPhotoDescription();
+
+const pictureFragment = document.createDocumentFragment();
+
 
 photoDescription.forEach((pic) => {
   const userPicture = pictureTemplate.cloneNode(true);
@@ -11,7 +14,7 @@ photoDescription.forEach((pic) => {
   userPicture.querySelector(".picture__img").alt = pic.description;
   userPicture.querySelector(".picture__likes").textContent = pic.likes;
   userPicture.querySelector(".picture__comments").textContent = pic.comments.length;
-  picturesContainer.appendChild(userPicture);
+  pictureFragment.appendChild(userPicture);
 });
 
-
+picturesContainer.appendChild(pictureFragment);
