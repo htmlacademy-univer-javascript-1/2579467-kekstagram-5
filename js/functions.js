@@ -4,12 +4,10 @@ function checkStrLen(str, len) {
   return str.length <= len;
 }
 
-
 function isPalindrome(str) {
   const normalizedStr = str.toLowerCase().replaceAll(" ", "");
   return normalizedStr === normalizedStr.split("").reverse().join("");
 }
-
 
 function toNum(inputValue) {
   const str = inputValue.toString();
