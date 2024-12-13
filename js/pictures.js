@@ -18,3 +18,5 @@ photoDescription.forEach((pic) => {
 });
 
 picturesContainer.appendChild(pictureFragment);
+
+export {photoDescription};

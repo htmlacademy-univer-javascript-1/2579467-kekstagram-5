@@ -1,2 +1,2 @@
 import "./functions.js";
-import "./pictures.js";
+import "./post-modal.js";
