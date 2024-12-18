@@ -71,19 +71,15 @@ pictures.forEach((pic, key) => {
     const userPhoto = photoDescription[key];
     openBigPicture(userPhoto);
   });
-
-  pic.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      evt.preventDefault();
-      closeBigPicture();
-    }
-  });
 });
 
-cancelPicture.addEventListener("click", () => {
-  closeBigPicture();
-});
+cancelPicture.addEventListener("click", closeBigPicture);
 
-socialCommentsLoader.addEventListener("click", () => {
-  renderComments();
+socialCommentsLoader.addEventListener("click", renderComments);
+
+document.addEventListener("keydown", (evt) => {
+  if (evt.key === "Escape") {
+    evt.preventDefault();
+    closeBigPicture();
+  }
 });
