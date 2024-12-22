@@ -1408,3 +1408,12 @@ main {
 .hidden {
   display: none;
 }
+
+.pristine-error {
+  color: red;
+  text-transform: none;
+}
+
+.form-input-error {
+  margin: 0;
+}
