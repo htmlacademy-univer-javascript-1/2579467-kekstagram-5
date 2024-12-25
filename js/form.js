@@ -5,7 +5,9 @@ const uploadImgOverlay = document.querySelector(".img-upload__overlay");
 const uploadImgCancel = document.querySelector(".img-upload__cancel");
 const userForm = document.querySelector(".img-upload__form");
 const bodyElement = document.querySelector("body");
-const hashtags = document.querySelector(".text__hashtags");
+const hashtags = userForm.querySelector(".text__hashtags");
+
+let errorMessage = "";
 
 const pristine = new Pristine(userForm, {classTo: "setup-user-form__element", errorTextParent: "setup-user-form__element"});
 
@@ -20,8 +22,6 @@ function closeEditingfForm() {
   uploadImgInput.value = "";
 }
 
-uploadImgInput.addEventListener("change", openEditingForm);
-
 uploadImgCancel.addEventListener("click", closeEditingfForm);
 
 document.addEventListener("keydown", (evt) => {
@@ -31,23 +31,38 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-function validateStartsWithHash(value) {
+function checkStartsWithHash(value) {
   const allHashtags = value.trim().split(" ");
   return allHashtags.every((tag) => tag === "" || tag.startsWith("#"));
 }
 
-function validateUniqueHashtags(value) {
-  const allHashtags = value.trim().split(" ").map((tag) => tag.toLowerCase());
+function checkUniqueHashtags(value) {
+  const allHashtags = value.toLowerCase().trim().split(" ");
   const uniqueHashtags = new Set(allHashtags);
   return allHashtags.length === uniqueHashtags.size;
 }
-function validateSeparatedBySpaces(value) {
+function checkSeparatedBySpaces(value) {
   return !/[^\s]#[^\s]/.test(value);
 }
 
-pristine.addValidator(userForm.querySelector(".text__hashtags"), validateStartsWithHash, "Каждый хэш-тег должен начинаться с символа #.");
-pristine.addValidator(userForm.querySelector(".text__hashtags"), validateSeparatedBySpaces, "Хэштеги должны разделяться пробелами.");
-pristine.addValidator(userForm.querySelector(".text__hashtags"),validateUniqueHashtags, "Хэштеги не могут повторяться.");
+function validateHashtags(value) {
+  if (!checkStartsWithHash(value)) {
+    errorMessage = "Каждый хэш-тег должен начинаться с символа #";
+  }
+  if (!checkSeparatedBySpaces(value)) {
+    errorMessage = "Хэштеги должны разделяться пробелами";
+  }
+  if (!checkUniqueHashtags(value)) {
+    errorMessage = "Хэштеги не могут повторяться.";
+  }
+  return checkStartsWithHash(value) && checkUniqueHashtags(value) && checkSeparatedBySpaces(value);
+}
+
+function getErrorMessage() {
+  return errorMessage;
+}
+
+pristine.addValidator(userForm.querySelector(".text__hashtags"), validateHashtags, getErrorMessage);
 
 userForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -62,4 +77,6 @@ hashtags.addEventListener("input", () => {
     hashtags.classList.add("form-input-error");
   }
 });
+
+export {openEditingForm};
 

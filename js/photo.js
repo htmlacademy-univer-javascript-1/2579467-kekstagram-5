@@ -1,3 +1,5 @@
+import { openEditingForm } from "./form.js";
+
 const FILE_TYPES = ["jpg", "jpeg", "png"];
 
 const fileChooser = document.querySelector("input[type=file]");
@@ -5,6 +7,7 @@ const preview = document.querySelector(".img-upload__preview img");
 const effectsView = document.querySelectorAll(".effects__preview");
 
 fileChooser.addEventListener("change", () => {
+  openEditingForm();
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
