@@ -1,22 +1,20 @@
-import { createPhotoDescription } from "./data.js";
-
 const pictureTemplate = document.querySelector("#picture").content.querySelector(".picture");
 const picturesContainer = document.querySelector(".pictures");
 
-const photoDescription = createPhotoDescription();
+const createPhotoDescription = (photos) => {
+  const pictureFragment = document.createDocumentFragment();
 
-const pictureFragment = document.createDocumentFragment();
+  photos.forEach(({comments, description, likes, url}) => {
+    const userPicture = pictureTemplate.cloneNode(true);
+    userPicture.querySelector(".picture__img").src = url;
+    userPicture.querySelector(".picture__img").alt = description;
+    userPicture.querySelector(".picture__likes").textContent = likes;
+    userPicture.querySelector(".picture__comments").textContent = comments.length;
+    pictureFragment.appendChild(userPicture);
+  });
+
+  picturesContainer.appendChild(pictureFragment);
+};
 
 
-photoDescription.forEach((pic) => {
-  const userPicture = pictureTemplate.cloneNode(true);
-  userPicture.querySelector(".picture__img").src = pic.url;
-  userPicture.querySelector(".picture__img").alt = pic.description;
-  userPicture.querySelector(".picture__likes").textContent = pic.likes;
-  userPicture.querySelector(".picture__comments").textContent = pic.comments.length;
-  pictureFragment.appendChild(userPicture);
-});
-
-picturesContainer.appendChild(pictureFragment);
-
-export {photoDescription};
+export {createPhotoDescription};

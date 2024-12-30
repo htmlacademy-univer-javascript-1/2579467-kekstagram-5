@@ -1,7 +1,5 @@
-import { photoDescription } from "./pictures.js";
 import { createComment } from "./data.js";
 
-const pictures = document.querySelectorAll(".picture");
 const bigPicture = document.querySelector(".big-picture");
 const bigPictureImg = document.querySelector(".big-picture__img img");
 const likesCount = document.querySelector(".likes-count");
@@ -16,7 +14,7 @@ const COMMENTS_ON_PAGE = 5;
 let currentCommentsCount = 0;
 let allComments = [];
 
-function openBigPicture(userPhoto) {
+const openBigPicture = (userPhoto) => {
   bigPicture.classList.remove("hidden");
   bodyElement.classList.add("modal-open");
 
@@ -31,12 +29,12 @@ function openBigPicture(userPhoto) {
   currentCommentsCount = 0;
 
   renderComments();
-}
+};
 
-function closeBigPicture() {
+const closeBigPicture = () => {
   bigPicture.classList.add("hidden");
   bodyElement.classList.remove("modal-open");
-}
+};
 
 function renderComments() {
 
@@ -66,12 +64,16 @@ function checkLoaderVisibility() {
   }
 }
 
-pictures.forEach((pic, key) => {
-  pic.addEventListener("click", () => {
-    const userPhoto = photoDescription[key];
-    openBigPicture(userPhoto);
+function handlePhotoClick(photos) {
+  const pictures = document.querySelectorAll(".picture");
+
+  pictures.forEach((pic, key) => {
+    pic.addEventListener("click", () => {
+      const userPhoto = photos[key];
+      openBigPicture(userPhoto);
+    });
   });
-});
+}
 
 cancelPicture.addEventListener("click", closeBigPicture);
 
@@ -83,3 +85,5 @@ document.addEventListener("keydown", (evt) => {
     closeBigPicture();
   }
 });
+
+export {handlePhotoClick};
